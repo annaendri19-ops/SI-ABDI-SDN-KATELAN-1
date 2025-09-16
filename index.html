@@ -102,7 +102,10 @@
     <p id="tanggal-hari-ini" style="font-weight: bold;"></p>
     <button onclick="window.print()">Cetak Absensi</button>
   </div>
-
+<div style="text-align:center; margin-top:1rem;">
+  <label for="fileInput"><strong>Impor Nama Siswa:</strong></label><br>
+  <input type="file" id="fileInput" accept=".txt,.csv" />
+</div>
   <div class="absensi-container" id="absensi-container"></div>
 
   <div id="rekap-absensi">
@@ -132,8 +135,31 @@
       <tr><td>3</td><td>AGNES SUSIANA</td><td>19</td><td>3</td><td>1</td><td>0</td></tr>
       <tr><td>4</td><td>Aifaz Xiao Irvan Winata</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
       <tr><td>5</td><td>Al Gianfranko Zola</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
-      <!-- Tambahkan siswa 6–27 sesuai data -->
+      <tr><td>6</td><td>ALESHA WILY AZZAHRA</td><td>22</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>7</td><td>ALFIANO RAFIN SAPUTRA</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>8</td><td>ALFISSA RESTIANI PUTRI</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>9</td><td>Alviano Rizky Nugroho</td><td>19</td><td>3</td><td>1</td><td>0</td></tr>
+      <tr><td>10</td><td>ANANDA BRYAN SYAPUTRA</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>11</td><td>ANINDYA ABELLIA PUTRI</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>12</td><td>AQILA ARTIANDRA PRADIPTA</td><td>22</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>13</td><td>ARJUNA DE ANANTA</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>14</td><td>ARSYA BILAL SAPUTRA</td><td>19</td><td>3</td><td>1</td><td>0</td></tr>
+      <tr><td>15</td><td>ARYA HAMIZAN AL GHAZALI</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>16</td><td>Ashari Tuhutama</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>17</td><td>Asril Nur Roiz</td><td>22</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>18</td><td>Auliyah Asyifa Anggraini</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>19</td><td>Azriel Muhammad Alfatih</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>20</td><td>BIAS CECE AZKYA AGUSAVANIA</td><td>19</td><td>3</td><td>1</td><td>0</td></tr>
+      <tr><td>21</td><td>Danu Arif Prasetyo</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>22</td><td>DAVITA NUR AZIZAH</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>23</td><td>DWI ANAWAR</td><td>22</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>24</td><td>Dzakira Talita Zahra</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>25</td><td>EMBUN DARAKRISTI</td><td>19</td><td>3</td><td>1</td><td>0</td></tr>
+      <tr><td>26</td><td>Fadli Raditya</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>27</td><td>FAEYZA NIZAM SURYANTO</td><td>22</td><td>0</td><td>1</td><td>0</td></tr>
     </tbody>
+  </table>
+  </div>
   </table>
   <div style="text-align:center; margin-top:1rem;">
     <button onclick="window.print()" style="background-color:#007bff; color:white; padding:0.5rem 1rem; border:none; border-radius:4px; cursor:pointer;">Cetak Rekap Bulanan</button>
@@ -194,3 +220,38 @@
   </script>
 </body>
 </html>
+<script>
+  // Fungsi untuk membaca file dan menampilkan siswa
+  document.getElementById("fileInput").addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const isi = e.target.result;
+      const daftarNama = isi.split(/\r?\n/).filter(n => n.trim() !== "");
+      tampilkanKartuSiswa(daftarNama);
+    };
+    reader.readAsText(file);
+  });
+
+  // Fungsi untuk menampilkan kartu siswa
+  function tampilkanKartuSiswa(namaArray) {
+    const container = document.getElementById("absensi-container");
+    container.innerHTML = ""; // Kosongkan dulu
+    namaArray.forEach((nama, i) => {
+      const card = document.createElement("div");
+      card.className = "siswa-card";
+      card.innerHTML = `
+        <p class="nama-anak">${i + 1}. ${nama}</p>
+        <div class="status-buttons">
+          <button class="hadir" onclick="setStatus(this, '✅ Hadir', '#28a745')">Hadir</button>
+          <button class="izin" onclick="setStatus(this, '🟡 Izin', '#ffc107')">Izin</button>
+          <button class="sakit" onclick="setStatus(this, '🔵 Sakit', '#17a2b8')">Sakit</button>
+          <button class="alfa" onclick="setStatus(this, '🔴 Alfa', '#dc3545')">Alfa</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+</script>
