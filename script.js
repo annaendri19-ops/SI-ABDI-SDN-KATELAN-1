@@ -278,3 +278,16 @@ function setStatus(button, label, color) {
   document.getElementById("jumlah-sakit").innerText = rekap.sakit;
   document.getElementById("jumlah-alfa").innerText = rekap.alfa;
 }
+function saveAttendanceToLocal() {
+  localStorage.setItem("attendanceData", JSON.stringify(attendance));
+}
+attendance.push({ name, date, status });
+saveAttendanceToLocal();
+window.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("attendanceData");
+  if (saved) {
+    attendance = JSON.parse(saved);
+  }
+  showDailyRecap();
+  showMonthlyRecap();
+});
