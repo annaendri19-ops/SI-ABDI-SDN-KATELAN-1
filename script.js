@@ -283,10 +283,25 @@ function saveAttendanceToLocal() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-  const saved = localStorage.getItem("attendance");
-    attendance = JSON.parse(saved);
+  const savedAttendance = localStorage.getItem("attendance");
+  if (savedAttendance) {
+    attendance = JSON.parse(savedAttendance);
   }
+
+  const savedStudents = localStorage.getItem("students");
+  if (savedStudents) {
+    students = JSON.parse(savedStudents);
+  }
+
+  updateStudentList();
+  updateAttendanceTable();
+
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("dailySelector").value = today;
   showDailyRecap();
+
+  const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
+  document.getElementById("monthlySelector").value = currentMonth;
   showMonthlyRecap();
 });
 updateAttendanceTable();
