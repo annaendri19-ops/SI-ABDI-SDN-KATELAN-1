@@ -305,3 +305,16 @@ window.addEventListener("DOMContentLoaded", () => {
   showMonthlyRecap();
 });
 updateAttendanceTable();
+document.getElementById("saveAttendanceBtn").addEventListener("click", () => {
+  localStorage.setItem("attendance", JSON.stringify(attendance));
+  alert("Absensi berhasil disimpan!");
+});
+document.getElementById("resetTodayBtn").addEventListener("click", () => {
+  const today = new Date().toISOString().split("T")[0];
+  attendance = attendance.filter(a => a.date !== today);
+  localStorage.setItem("attendance", JSON.stringify(attendance));
+  updateAttendanceTable();
+  showDailyRecap();
+  showMonthlyRecap();
+  alert("Absensi hari ini telah dihapus.");
+});
