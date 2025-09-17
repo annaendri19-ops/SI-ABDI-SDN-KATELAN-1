@@ -2,7 +2,271 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
+  <meta <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Absensi Digital SDN Katelan 1</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .identitas, .tanggal-cetak {
+      background-color: #e6f0ff;
+      padding: 1rem;
+      text-align: center;
+      font-size: 14px;
+    }
+    .tanggal-cetak button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    .absensi-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    .siswa-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 1rem;
+      width: 280px;
+      text-align: center;
+    }
+    .nama-anak {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .status-buttons button {
+      margin: 0.2rem;
+      padding: 0.4rem 0.8rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+    }
+    .hadir { background-color: #28a745; }
+    .izin { background-color: #ffc107; }
+    .sakit { background-color: #17a2b8; }
+    .alfa { background-color: #dc3545; }
+    #rekap-absensi {
+      text-align: center;
+      margin: 2rem;
+      font-size: 16px;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 600px) {
+      .siswa-card {
+        width: 90%;
+      }
+      .nama-anak {
+        font-size: 16px;
+      }
+      .status-buttons button {
+        width: 100%;
+        margin-bottom: 0.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Absensi Digital Siswa Kelas 5 SDN Katelan 1</h1>
+  </header>
+
+  <div class="identitas">
+    <p><strong>Kepala Sekolah:</strong> Sri Wiji Mulyani, S.Pd, SD — NIP: 197011272005012006</p>
+    <p><strong>Wali Kelas:</strong> Anna Endri Lestari, S.Pd — NIP: 199105022024212042</p>
+  </div>
+
+  <div class="tanggal-cetak">
+    <p id="tanggal-hari-ini" style="font-weight: bold;"></p>
+    <button onclick="window.print()">Cetak Absensi</button>
+  </div>
+<div style="text-align:center; margin-top:1rem;">
+  <label for="fileInput"><strong>Impor Nama Siswa:</strong></label><br>
+  <input type="file" id="fileInput" accept=".txt,.csv" />
+</div>
+  <div class="absensi-container" id="absensi-container"></div>
+
+  <div id="rekap-absensi">
+    <h3>Rekap Absensi Hari Ini</h3>
+    <p>✅ Hadir: <span id="jumlah-hadir">0</span></p>
+    <p>🟡 Izin: <span id="jumlah-izin">0</span></p>
+    <p>🔵 Sakit: <span id="jumlah-sakit">0</span></p>
+    <p>🔴 Alfa: <span id="jumlah-alfa">0</span></p>
+  </div>
+
+<div id="rekap-bulanan">
+  <h3 style="text-align:center;">Rekap Absensi Bulan September 2025</h3>
+  <table style="width:100%; border-collapse:collapse; margin-top:1rem;">
+    <thead>
+      <tr style="background:#e0e0e0;">
+        <th style="border:1px solid #ccc; padding:8px;">No</th>
+        <th style="border:1px solid #ccc; padding:8px;">Nama Siswa</th>
+        <th style="border:1px solid #ccc; padding:8px;">Hadir</th>
+        <th style="border:1px solid #ccc; padding:8px;">Izin</th>
+        <th style="border:1px solid #ccc; padding:8px;">Sakit</th>
+        <th style="border:1px solid #ccc; padding:8px;">Alfa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>ABID AQILA ALVARO</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>2</td><td>Adiba Nur Jannah</td><td>19</td><td>3</td><td>1</td><td>0</td></tr>
+      <tr><td>3</td><td>AGNES SUSIANA</td><td>19</td><td>3</td><td>1</td><td>0</td></tr>
+      <tr><td>4</td><td>Aifaz Xiao Irvan Winata</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>5</td><td>Al Gianfranko Zola</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>6</td><td>ALESHA WILY AZZAHRA</td><td>22</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>7</td><td>ALFIANO RAFIN SAPUTRA</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>8</td><td>ALFISSA RESTIANI PUTRI</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>9</td><td>Alviano Rizky Nugroho</td><td>19</td><td>3</td><td>1</td><td>0</td></tr>
+      <tr><td>10</td><td>ANANDA BRYAN SYAPUTRA</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>11</td><td>ANINDYA ABELLIA PUTRI</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>12</td><td>AQILA ARTIANDRA PRADIPTA</td><td>22</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>13</td><td>ARJUNA DE ANANTA</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>14</td><td>ARSYA BILAL SAPUTRA</td><td>19</td><td>3</td><td>1</td><td>0</td></tr>
+      <tr><td>15</td><td>ARYA HAMIZAN AL GHAZALI</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>16</td><td>Ashari Tuhutama</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>17</td><td>Asril Nur Roiz</td><td>22</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>18</td><td>Auliyah Asyifa Anggraini</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>19</td><td>Azriel Muhammad Alfatih</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>20</td><td>BIAS CECE AZKYA AGUSAVANIA</td><td>19</td><td>3</td><td>1</td><td>0</td></tr>
+      <tr><td>21</td><td>Danu Arif Prasetyo</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>22</td><td>DAVITA NUR AZIZAH</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>23</td><td>DWI ANAWAR</td><td>22</td><td>0</td><td>1</td><td>0</td></tr>
+      <tr><td>24</td><td>Dzakira Talita Zahra</td><td>20</td><td>2</td><td>1</td><td>0</td></tr>
+      <tr><td>25</td><td>EMBUN DARAKRISTI</td><td>19</td><td>3</td><td>1</td><td>0</td></tr>
+      <tr><td>26</td><td>Fadli Raditya</td><td>21</td><td>1</td><td>1</td><td>0</td></tr>
+      <tr><td>27</td><td>FAEYZA NIZAM SURYANTO</td><td>22</td><td>0</td><td>1</td><td>0</td></tr>
+    </tbody>
+<button id="saveAttendanceBtn">💾 Simpan Absensi</button>
+<button id="resetTodayBtn">🔄 Reset Hari Ini</button>
+  </table>
+  </div>
+  </table>
+  <div style="text-align:center; margin-top:1rem;">
+    <button onclick="window.print()" style="background-color:#007bff; color:white; padding:0.5rem 1rem; border:none; border-radius:4px; cursor:pointer;">Cetak Rekap Bulanan</button>
+  </div>
+</div>
+  <script>
+    // Tampilkan tanggal hari ini
+    const tanggal = new Date();
+    const opsiTanggal = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById("tanggal-hari-ini").innerText = "Tanggal: " + tanggal.toLocaleDateString('id-ID', opsiTanggal);
+
+    // Daftar siswa
+    const siswa = [
+      "ABID AQILA ALVARO", "Adiba Nur Jannah", "AGNES SUSIANA", "Aifaz Xiao Irvan Winata",
+      "Al Gianfranko Zola", "ALESHA WILY AZZAHRA", "ALFIANO RAFIN SAPUTRA", "ALFISSA RESTIANI PUTRI",
+      "Alviano Rizky Nugroho", "ANANDA BRYAN SYAPUTRA", "ANINDYA ABELLIA PUTRI", "AQILA ARTIANDRA PRADIPTA",
+      "ARJUNA DE ANANTA", "ARSYA BILAL SAPUTRA", "ARYA HAMIZAN AL GHAZALI", "Ashari Tuhutama",
+      "Asril Nur Roiz", "Auliyah Asyifa Anggraini", "Azriel Muhammad Alfatih", "BIAS CECE AZKYA AGUSAVANIA",
+      "Danu Arif Prasetyo", "DAVITA NUR AZIZAH", "DWI ANAWAR", "Dzakira Talita Zahra",
+      "EMBUN DARAKRISTI", "Fadli Raditya", "FAEYZA NIZAM SURYANTO"
+    ];
+
+    // Rekap data
+    let rekap = { hadir: 0, izin: 0, sakit: 0, alfa: 0 };
+
+    // Fungsi status
+    function setStatus(button, label, color) {
+      const container = button.parentElement;
+      container.innerHTML = `<span style="font-weight:bold; color:${color};">${label}</span>`;
+
+      if (label.includes("Hadir")) rekap.hadir++;
+      else if (label.includes("Izin")) rekap.izin++;
+      else if (label.includes("Sakit")) rekap.sakit++;
+      else if (label.includes("Alfa")) rekap.alfa++;
+
+      document.getElementById("jumlah-hadir").innerText = rekap.hadir;
+      document.getElementById("jumlah-izin").innerText = rekap.izin;
+      document.getElementById("jumlah-sakit").innerText = rekap.sakit;
+      document.getElementById("jumlah-alfa").innerText = rekap.alfa;
+    }
+
+    // Tampilkan semua kartu siswa
+    const container = document.getElementById("absensi-container");
+    siswa.forEach((nama, i) => {
+      const card = document.createElement("div");
+      card.className = "siswa-card";
+      card.innerHTML = `
+        <p class="nama-anak">${i + 1}. ${nama}</p>
+        <div class="status-buttons">
+          <button class="hadir" onclick="setStatus(this, '✅ Hadir', '#28a745')">Hadir</button>
+          <button class="izin" onclick="setStatus(this, '🟡 Izin', '#ffc107')">Izin</button>
+          <button class="sakit" onclick="setStatus(this, '🔵 Sakit', '#17a2b8')">Sakit</button>
+          <button class="alfa" onclick="setStatus(this, '🔴 Alfa', '#dc3545')">Alfa</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
+<script>
+  // Fungsi untuk membaca file dan menampilkan siswa
+  document.getElementById("fileInput").addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const isi = e.target.result;
+      const daftarNama = isi.split(/\r?\n/).filter(n => n.trim() !== "");
+      tampilkanKartuSiswa(daftarNama);
+    };
+    reader.readAsText(file);
+  });
+
+  // Fungsi untuk menampilkan kartu siswa
+  function tampilkanKartuSiswa(namaArray) {
+    const container = document.getElementById("absensi-container");
+    container.innerHTML = ""; // Kosongkan dulu
+    namaArray.forEach((nama, i) => {
+      const card = document.createElement("div");
+      card.className = "siswa-card";
+      card.innerHTML = `
+        <p class="nama-anak">${i + 1}. ${nama}</p>
+        <div class="status-buttons">
+          <button class="hadir" onclick="setStatus(this, '✅ Hadir', '#28a745')">Hadir</button>
+          <button class="izin" onclick="setStatus(this, '🟡 Izin', '#ffc107')">Izin</button>
+          <button class="sakit" onclick="setStatus(this, '🔵 Sakit', '#17a2b8')">Sakit</button>
+          <button class="alfa" onclick="setStatus(this, '🔴 Alfa', '#dc3545')">Alfa</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+</script>
+<input type="date" id="dailySelector" />
+<select id="monthlySelector">
+  <option value="01">Januari</option>
+  <option value="02">Februari</option>
+  <!-- dan seterusnya -->
+</select>name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Absensi Digital SDN Katelan 1</title>
   <style>
     body {
@@ -261,3 +525,4 @@
   <option value="02">Februari</option>
   <!-- dan seterusnya -->
 </select>
+
