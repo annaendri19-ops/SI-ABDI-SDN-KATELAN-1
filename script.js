@@ -51,13 +51,6 @@ document.getElementById("attendanceForm").addEventListener("submit", (e) => {
   showMonthlyRecap();
 });
 
-function updateAttendanceTable() {
-  const tbody = document.querySelector("#dailyAttendance tbody");
-  const summary = { Hadir: 0, Alfa: 0, Sakit: 0, Izin: 0 };
-  const today = new Date().toISOString().split("T")[0];
-  const todayData = attendance.filter((a) => a.date === today);
-  const grouped = {};
-
   todayData.forEach((a) => {
     if (!grouped[a.name]) grouped[a.name] = { Hadir: 0, Alfa: 0, Sakit: 0, Izin: 0 };
     grouped[a.name][a.status]++;
